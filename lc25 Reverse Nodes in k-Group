@@ -1,0 +1,32 @@
+public ListNode reverseKGroup(ListNode head, int k) {
+        if(head == null||head.next == null || k == 1)
+            return head;
+        ListNode dummy = new ListNode(-1);
+        dummy.next = head;
+        ListNode p = head, begin = dummy;
+        
+        int i = 0;
+        while(p != null){
+            i++; // used for counting
+            if(i % k == 0){
+                begin = reverse(begin, p.next);
+                p = begin.next;
+            }else{
+                p = p.next;
+            }
+        }
+        return dummy.next;
+    }
+    
+    public ListNode reverse(ListNode begin, ListNode end){
+        ListNode prev = begin,first = begin.next, curr = begin.next;
+        while(curr != end){
+            ListNode post = curr.next;
+            curr.next = prev;
+            prev = curr;    
+            curr = post;
+        }
+        begin.next = prev;
+        first.next = curr;
+        return first;      
+    }
